@@ -17,8 +17,8 @@ It replaces CoreBluetooth's protocols and delegates with a block-based pattern, 
   s.ios.deployment_target = '9.0'
 
   s.source_files = 'Sources/**/*'
-
+  s.exclude_files = 'Sources/Info-iOS.plist'
   s.frameworks = 'CoreBluetooth'
   
-  s.swift_version = '4.0'
+  s.swift_versions = ['4.0', '4.2', '5.0']
 end
