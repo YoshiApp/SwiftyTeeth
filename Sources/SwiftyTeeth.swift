@@ -43,6 +43,7 @@ open class SwiftyTeeth: NSObject {
     // TODO: Should be a list? Can connect to > 1 device
     fileprivate var connectedDevices = [String:Device]()
 
+    var timer:Timer?
     
     // TODO: Need iOS 9 support
 //    open var state: CBManagerState {
@@ -81,18 +82,20 @@ public extension SwiftyTeeth {
         scan()
     }
     
+    @available(iOSApplicationExtension 10.0, *)
     func scan(for timeout: TimeInterval = 10, changes: ((Device) -> Void)? = nil, complete: @escaping ([Device]) -> Void) {
         scanChangesHandler = changes
         scanCompleteHandler = complete
-        // TODO: Should this be on main, or on CB queue?
-        DispatchQueue.main.asyncAfter(deadline: .now() + timeout) {
-            self.stopScan()
+        timer?.invalidate()
+        timer = Timer.scheduledTimer(withTimeInterval: timeout, repeats: false) { [weak self] timer in
+            self?.stopScan()
         }
         scan()
     }
 
     func stopScan() {
         // TODO: Cancel asyncAfter if in progress?
+        timer?.invalidate()
         centralManager.stopScan()
         scanCompleteHandler?(Array(scannedDevices))
         
