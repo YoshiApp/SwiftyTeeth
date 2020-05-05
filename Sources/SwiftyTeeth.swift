@@ -159,9 +159,9 @@ extension SwiftyTeeth: CBCentralManagerDelegate {
     }
     
     public func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
-        guard peripheral.name != nil else {
-            return
-        }
+//        guard peripheral.name != nil else {
+//            return
+//        }
         
         let device = Device(manager: self, peripheral: peripheral)
         scannedDevices.insert(device)
