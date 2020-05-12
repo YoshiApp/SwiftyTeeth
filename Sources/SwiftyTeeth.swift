@@ -163,7 +163,7 @@ extension SwiftyTeeth: CBCentralManagerDelegate {
 //            return
 //        }
         if let deviceName = advertisementData[CBAdvertisementDataLocalNameKey] as? String {
-            Log(String(format: "Device Name = %@", deviceName))
+            Log(v: String(format: "Device Name = %@", deviceName))
         }
         let device = Device(manager: self, peripheral: peripheral)
         scannedDevices.insert(device)
