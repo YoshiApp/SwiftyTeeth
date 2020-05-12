@@ -72,9 +72,9 @@ public extension SwiftyTeeth {
 // MARK: - Manager Scan functions
 public extension SwiftyTeeth {
 
-    func scan() {
+    func scan(with services: [CBUUID]? = nil) {
         scannedDevices.removeAll()
-        centralManager.scanForPeripherals(withServices: nil, options: [CBCentralManagerScanOptionAllowDuplicatesKey: true])
+        centralManager.scanForPeripherals(withServices: services, options: [CBCentralManagerScanOptionAllowDuplicatesKey: true])
     }
     
     func scan(changes: ((Device) -> Void)?) {
@@ -83,14 +83,14 @@ public extension SwiftyTeeth {
     }
     
     @available(iOSApplicationExtension 10.0, *)
-    func scan(for timeout: TimeInterval = 10, changes: ((Device) -> Void)? = nil, complete: @escaping ([Device]) -> Void) {
+    func scan(with services: [CBUUID]? = nil, for timeout: TimeInterval = 10, changes: ((Device) -> Void)? = nil, complete: @escaping ([Device]) -> Void) {
         scanChangesHandler = changes
         scanCompleteHandler = complete
         timer?.invalidate()
         timer = Timer.scheduledTimer(withTimeInterval: timeout, repeats: false) { [weak self] timer in
             self?.stopScan()
         }
-        scan()
+        scan(with: services)
     }
 
     func stopScan() {
