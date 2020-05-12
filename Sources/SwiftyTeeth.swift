@@ -162,7 +162,9 @@ extension SwiftyTeeth: CBCentralManagerDelegate {
 //        guard peripheral.name != nil else {
 //            return
 //        }
-        
+        if let deviceName = advertisementData[CBAdvertisementDataLocalNameKey] as? String {
+            Log(String(format: "Device Name = %@", deviceName))
+        }
         let device = Device(manager: self, peripheral: peripheral)
         scannedDevices.insert(device)
         scanChangesHandler?(device)
