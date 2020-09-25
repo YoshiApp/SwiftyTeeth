@@ -30,6 +30,7 @@ open class Device: NSObject {
     fileprivate let tag = "SwiftyDevice"
     
     let peripheral: CBPeripheral
+    let serviceUUID: CBUUID?
     
     // TODO: Maybe just make this a String of Strings?
     open var discoveredServices = [CBService: [CBCharacteristic]]()
@@ -48,14 +49,15 @@ open class Device: NSObject {
         return instance
     }()
     
-    public init(manager: SwiftyTeeth, peripheral: CBPeripheral) {
+    public init(manager: SwiftyTeeth, peripheral: CBPeripheral, serviceUUID: CBUUID?) {
         self.manager = manager
         self.peripheral = peripheral
         self.peripheral.delegate = manager
+        self.serviceUUID = serviceUUID
     }
     
     public convenience init(copy: Device) {
-        self.init(manager: copy.manager, peripheral: copy.peripheral)
+        self.init(manager: copy.manager, peripheral: copy.peripheral, serviceUUID: copy.serviceUUID)
     }
 }
 

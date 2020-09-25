@@ -165,7 +165,12 @@ extension SwiftyTeeth: CBCentralManagerDelegate {
         if let deviceName = advertisementData[CBAdvertisementDataLocalNameKey] as? String {
             Log(v: String(format: "Device Name = %@", deviceName))
         }
-        let device = Device(manager: self, peripheral: peripheral)
+        var service:CBUUID?
+        if let deviceService = advertisementData[CBAdvertisementDataServiceUUIDsKey] as? [CBUUID] {
+            service = deviceService[0]
+            NSLog("Device Service = %@", service?.uuidString ?? "")
+        }
+        let device = Device(manager: self, peripheral: peripheral, serviceUUID: service)
         scannedDevices.insert(device)
         scanChangesHandler?(device)
     }
