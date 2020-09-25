@@ -30,7 +30,7 @@ open class Device: NSObject {
     fileprivate let tag = "SwiftyDevice"
     
     let peripheral: CBPeripheral
-    let serviceUUID: CBUUID?
+    public let serviceUUID: CBUUID?
     
     // TODO: Maybe just make this a String of Strings?
     open var discoveredServices = [CBService: [CBCharacteristic]]()
